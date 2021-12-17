@@ -1,0 +1,15 @@
+C:\Users\utilisateur\github\BatailleNavale\BatailleNavale\BatailleNavale\obj\Debug\net6.0\BatailleNavale.csproj.AssemblyReference.cache
+C:\Users\utilisateur\github\BatailleNavale\BatailleNavale\BatailleNavale\obj\Debug\net6.0\BatailleNavale.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\utilisateur\github\BatailleNavale\BatailleNavale\BatailleNavale\obj\Debug\net6.0\BatailleNavale.AssemblyInfoInputs.cache
+C:\Users\utilisateur\github\BatailleNavale\BatailleNavale\BatailleNavale\obj\Debug\net6.0\BatailleNavale.AssemblyInfo.cs
+C:\Users\utilisateur\github\BatailleNavale\BatailleNavale\BatailleNavale\obj\Debug\net6.0\BatailleNavale.csproj.CoreCompileInputs.cache
+C:\Users\utilisateur\github\BatailleNavale\BatailleNavale\BatailleNavale\bin\Debug\net6.0\BatailleNavale.exe
+C:\Users\utilisateur\github\BatailleNavale\BatailleNavale\BatailleNavale\bin\Debug\net6.0\BatailleNavale.deps.json
+C:\Users\utilisateur\github\BatailleNavale\BatailleNavale\BatailleNavale\bin\Debug\net6.0\BatailleNavale.runtimeconfig.json
+C:\Users\utilisateur\github\BatailleNavale\BatailleNavale\BatailleNavale\bin\Debug\net6.0\BatailleNavale.dll
+C:\Users\utilisateur\github\BatailleNavale\BatailleNavale\BatailleNavale\bin\Debug\net6.0\ref\BatailleNavale.dll
+C:\Users\utilisateur\github\BatailleNavale\BatailleNavale\BatailleNavale\bin\Debug\net6.0\BatailleNavale.pdb
+C:\Users\utilisateur\github\BatailleNavale\BatailleNavale\BatailleNavale\obj\Debug\net6.0\BatailleNavale.dll
+C:\Users\utilisateur\github\BatailleNavale\BatailleNavale\BatailleNavale\obj\Debug\net6.0\ref\BatailleNavale.dll
+C:\Users\utilisateur\github\BatailleNavale\BatailleNavale\BatailleNavale\obj\Debug\net6.0\BatailleNavale.pdb
+C:\Users\utilisateur\github\BatailleNavale\BatailleNavale\BatailleNavale\obj\Debug\net6.0\BatailleNavale.genruntimeconfig.cache
