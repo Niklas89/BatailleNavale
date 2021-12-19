@@ -114,13 +114,14 @@ public class Program
 			}
 		}
 	}
-	/* public static void ShowScore(string[] firstName, string[] playerNow, int[] nbShips, int[] score)
+	// Affichage du score des deux joueurs
+	public static void ShowScore(string[] firstName, int[] nbShips, int[] score)
     {
-		foreach (string player in firstName)
+		for (int firstNameIndex = 0; firstNameIndex < firstName.Length; firstNameIndex++)
 		{
-
+			Console.WriteLine(firstName[firstNameIndex] + " SCORE : " + score[firstNameIndex] + " - NOMBRE DE NAVIRES RESTANTS : " + nbShips[firstNameIndex]);
 		}
-	} */
+	}
 	public static void SinkEnemyShip(string[] firstName, string[] playerNow, int[] nbShips)
     {
 		foreach (string player in firstName)
@@ -298,6 +299,7 @@ public class Program
 		// Afficher le damier
 		ShowBoard(board, letters);
 		ShootShips(board, letters, firstName, playerNow, playerShipIcon, score, nbShips);
+		ShowScore(firstName,nbShips,score);
 
 	}
 }
