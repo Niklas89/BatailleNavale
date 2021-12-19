@@ -53,7 +53,7 @@ public class Program
 			{
 				if (letters[column] == ship[0])
 				{
-					board[secondCharShip - 1, column] = ship[1];
+					//board[secondCharShip - 1, column] = ship[1];
 					firstCharShip = column;
 				}
 			}
