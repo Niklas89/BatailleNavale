@@ -42,7 +42,8 @@ public class Program
 		while (keepAsking)
 		{
 			Console.WriteLine("Bonjour " + playerNow[0] + " !");
-			Console.WriteLine("Entrez la case où vous souhaitez placer votre premier bateau (comme 'B2' par exemple) :");
+			Console.WriteLine("Vous avez 4 cases pour placer vos navires.");
+			Console.WriteLine("Entrez la case où vous souhaitez placer votre premier navire (comme 'B2' par exemple) :");
 			ship = Console.ReadLine();
 			// Prendre le premier caractère de la chaine de caractères
 			int firstCharShip = 0;
@@ -66,6 +67,10 @@ public class Program
             {
 				chooseDirectionString = Console.ReadLine();
 				chooseDirection = int.Parse(chooseDirectionString);
+				if (board[secondCharShip - 1, firstCharShip] == 'x')
+				{
+					throw new DejaOccupe();
+				}
 				// Si la direction = 1 et la position donné par l'utilisateur + 3 (à l'horizontale vers la droite) est disponible :
 				if (chooseDirection == 1 && board[secondCharShip - 1, firstCharShip + 3] == '\0')
 				{
@@ -112,6 +117,10 @@ public class Program
 				Console.WriteLine("\n Vous ne pouvez pas choisir cette case, il n'y a pas de place dans la direction que vous avez choisie.");
 				Console.WriteLine("Veuillez choisir une autre case svp. \n");
 			}
+			catch (DejaOccupe e)
+            {
+				Console.WriteLine(e.Message);
+            }
 		}
 	}
 	// Affichage du score des deux joueurs
@@ -119,7 +128,7 @@ public class Program
     {
 		for (int firstNameIndex = 0; firstNameIndex < firstName.Length; firstNameIndex++)
 		{
-			Console.WriteLine(firstName[firstNameIndex] + " SCORE : " + score[firstNameIndex] + " - NOMBRE DE NAVIRES RESTANTS : " + nbShips[firstNameIndex]);
+			Console.WriteLine(firstName[firstNameIndex] + " - SCORE : " + score[firstNameIndex] + "/4 - NOMBRE DE NAVIRES RESTANTS : " + nbShips[firstNameIndex]);
 		}
 	}
 	public static void SinkEnemyShip(string[] firstName, string[] playerNow, int[] nbShips)
@@ -185,12 +194,7 @@ public class Program
 						// Si la case séléctionnée correspond à mon propre navire, je perds un point car je me tire dessus
 						if (board[secondCharShoot - 1, column] == 'x' && playerShipIcon[playerNowId] == 'x')
 						{
-							Console.Write("Vous avez tiré sur votre propre navire... Vous perdez un point !");
-							// damier[ligne, colonne] = ma case 'x' devient vide
-							board[secondCharShoot - 1, column] = '\0';
-							// Je perds un point
-							score[playerNowId]--;
-							nbShips[playerNowId]--;
+							Console.Write("Vous avez visé votre propre navire, ca ne marche pas. Raté !");
 						}
 						// Si la case séléctionnée correspond au navire de mon adversaire, je le tire dessus et je gagne un point
 						else if (board[secondCharShoot - 1, column] == 'o' && playerShipIcon[playerNowId] == 'x')
@@ -209,12 +213,7 @@ public class Program
 						// Si la case séléctionnée correspond à mon propre navire, je perds un point car je me tire dessus
 						if (board[secondCharShoot - 1, column] == 'o' && playerShipIcon[playerNowId] == 'o')
 						{
-							Console.Write("Vous avez tiré sur votre propre navire... Vous perdez un point !");
-							// damier[ligne, colonne] = ma case 'x' devient vide
-							board[secondCharShoot - 1, column] = '\0';
-							// Je perds un point
-							score[playerNowId]--;
-							nbShips[playerNowId]--;
+							Console.Write("Vous avez visé votre propre navire, ca ne marche pas. Raté !");
 						}
 						// Si la case séléctionnée correspond au navire de mon adversaire, je le tire dessus et je gagne un point
 						else if (board[secondCharShoot - 1, column] == 'x' && playerShipIcon[playerNowId] == 'o')
@@ -301,5 +300,16 @@ public class Program
 		ShootShips(board, letters, firstName, playerNow, playerShipIcon, score, nbShips);
 		ShowScore(firstName,nbShips,score);
 
+	}
+}
+public class DejaOccupe : Exception
+{
+	//Overriding the Message property
+	public override string Message
+	{
+		get
+		{
+			return "Désolé, la case est déjà occupée ! Veuillez choisir une autre case svp.";
+		}
 	}
 }
