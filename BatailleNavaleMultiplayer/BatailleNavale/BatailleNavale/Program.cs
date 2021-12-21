@@ -263,7 +263,7 @@ public class Program
 		string shoot;
 		bool continueBattle = true;
 		int playerNowId = 2;
-		string serverPlayerShot;
+		string serverPlayerShot = "";
 		while (continueBattle)
         {
 			// Le programme cherche le prénom de la personne qui joue et prend son indice dans le tableau firstName[]
