@@ -81,9 +81,9 @@ public class Program
 					board[secondCharShip - 1, firstCharShip + 1] = shipIcon;
 					board[secondCharShip - 1, firstCharShip + 2] = shipIcon;
 					board[secondCharShip - 1, firstCharShip + 3] = shipIcon;
-					string messageToSend = "LE CLIENT A REPONDU";
-					int byteCount = Encoding.ASCII.GetByteCount(messageToSend + 1);
-					byte[] sendData = Encoding.ASCII.GetBytes(messageToSend);
+					string messageToSend = ship + chooseDirectionString;
+					int byteCount = Encoding.UTF8.GetByteCount(messageToSend + 1);
+					byte[] sendData = Encoding.UTF8.GetBytes(messageToSend);
 					stream.Write(sendData, 0, sendData.Length);
 					Console.WriteLine("sending data to server...");
 					keepAsking = false;
@@ -96,9 +96,9 @@ public class Program
 					board[secondCharShip - 1, firstCharShip - 1] = shipIcon;
 					board[secondCharShip - 1, firstCharShip - 2] = shipIcon;
 					board[secondCharShip - 1, firstCharShip - 3] = shipIcon;
-					string messageToSend = "LE CLIENT A REPONDU";
-					int byteCount = Encoding.ASCII.GetByteCount(messageToSend + 1);
-					byte[] sendData = Encoding.ASCII.GetBytes(messageToSend);
+					string messageToSend = ship + chooseDirectionString;
+					int byteCount = Encoding.UTF8.GetByteCount(messageToSend + 1);
+					byte[] sendData = Encoding.UTF8.GetBytes(messageToSend);
 					stream.Write(sendData, 0, sendData.Length);
 					Console.WriteLine("sending data to server...");
 					keepAsking = false;
@@ -110,9 +110,9 @@ public class Program
 					board[secondCharShip - 2, firstCharShip] = shipIcon;
 					board[secondCharShip - 3, firstCharShip] = shipIcon;
 					board[secondCharShip - 4, firstCharShip] = shipIcon;
-					string messageToSend = "LE CLIENT A REPONDU";
-					int byteCount = Encoding.ASCII.GetByteCount(messageToSend + 1);
-					byte[] sendData = Encoding.ASCII.GetBytes(messageToSend);
+					string messageToSend = ship + chooseDirectionString;
+					int byteCount = Encoding.UTF8.GetByteCount(messageToSend + 1);
+					byte[] sendData = Encoding.UTF8.GetBytes(messageToSend);
 					stream.Write(sendData, 0, sendData.Length);
 					Console.WriteLine("sending data to server...");
 					keepAsking = false;
@@ -124,9 +124,9 @@ public class Program
 					board[secondCharShip, firstCharShip] = shipIcon;
 					board[secondCharShip + 1, firstCharShip] = shipIcon;
 					board[secondCharShip + 2, firstCharShip] = shipIcon;
-					string messageToSend = "LE CLIENT A REPONDU";
-					int byteCount = Encoding.ASCII.GetByteCount(messageToSend + 1);
-					byte[] sendData = Encoding.ASCII.GetBytes(messageToSend);
+					string messageToSend = ship + chooseDirectionString;
+					int byteCount = Encoding.UTF8.GetByteCount(messageToSend + 1);
+					byte[] sendData = Encoding.UTF8.GetBytes(messageToSend);
 					stream.Write(sendData, 0, sendData.Length);
 					Console.WriteLine("sending data to server...");
 					keepAsking = false;
@@ -144,6 +144,88 @@ public class Program
             {
 				Console.WriteLine(e.Message);
             }
+		}
+	}
+	// Placer les navires sur le navire
+	public static void PlaceShipsServer(char[,] board, char[] letters, string[] firstName, string[] playerNow, string shipCoordinatesServer)
+	{
+		char shipIcon = 'o';
+		bool keepAsking = true;
+		while (keepAsking)
+		{
+			// Prendre le premier caractère de la chaine de caractères
+			int firstCharShip = 0;
+			// Prendre le deuxième caractère de la chaine de caractères
+			int secondCharShip = shipCoordinatesServer[1] - '0';
+			// Prendre le troisième caractère de la chaine de caractères
+			int thirdCharShip = shipCoordinatesServer[2] - '0';
+			// Le programme cherche la case qui correspond dans le tableau
+			for (int column = 0; column < 10; column++)
+			{
+				if (letters[column] == shipCoordinatesServer[0])
+				{
+					//board[secondCharShip - 1, column] = ship[1];
+					firstCharShip = column;
+				}
+			}
+			try
+			{
+				if (board[secondCharShip - 1, firstCharShip] == 'x')
+				{
+					throw new DejaOccupe();
+				}
+				// Si la direction = 1 et la position donné par l'utilisateur + 3 (à l'horizontale vers la droite) est disponible :
+				if (thirdCharShip == 1 && board[secondCharShip - 1, firstCharShip + 3] == '\0')
+				{
+					board[secondCharShip - 1, firstCharShip] = shipIcon;
+					board[secondCharShip - 1, firstCharShip + 1] = shipIcon;
+					board[secondCharShip - 1, firstCharShip + 2] = shipIcon;
+					board[secondCharShip - 1, firstCharShip + 3] = shipIcon;
+					keepAsking = false;
+
+				}
+				// Si la direction = 2 et la position donné par l'utilisateur - 3 (à l'horizontale vers la gauche) est disponible :
+				else if (thirdCharShip == 2 && board[secondCharShip - 1, firstCharShip - 3] == '\0')
+				{
+					board[secondCharShip - 1, firstCharShip] = shipIcon;
+					board[secondCharShip - 1, firstCharShip - 1] = shipIcon;
+					board[secondCharShip - 1, firstCharShip - 2] = shipIcon;
+					board[secondCharShip - 1, firstCharShip - 3] = shipIcon;
+					keepAsking = false;
+				}
+				// Si la direction = 3 et la position donné par l'utilisateur - 3 (à la verticale vers le haut) est disponible :
+				else if (thirdCharShip == 3 && board[secondCharShip - 4, firstCharShip] == '\0')
+				{
+					board[secondCharShip - 1, firstCharShip] = shipIcon;
+					board[secondCharShip - 2, firstCharShip] = shipIcon;
+					board[secondCharShip - 3, firstCharShip] = shipIcon;
+					board[secondCharShip - 4, firstCharShip] = shipIcon;
+					keepAsking = false;
+				}
+				// Si la direction = 4 et la position donné par l'utilisateur + 3 (à la verticale vers le bas) est disponible :
+				else if (thirdCharShip == 4 && board[secondCharShip + 2, firstCharShip] == '\0')
+				{
+					board[secondCharShip - 1, firstCharShip] = shipIcon;
+					board[secondCharShip, firstCharShip] = shipIcon;
+					board[secondCharShip + 1, firstCharShip] = shipIcon;
+					board[secondCharShip + 2, firstCharShip] = shipIcon;
+					keepAsking = false;
+				}
+				else
+				{
+					Console.WriteLine("\n Vous ne pouvez pas choisir cette case, il n'y a pas de place dans la direction que vous avez choisie.");
+					Console.WriteLine("Veuillez choisir une autre case svp. \n");
+				}
+			}
+			catch (IndexOutOfRangeException ex)
+			{
+				Console.WriteLine("\n Vous ne pouvez pas choisir cette case, il n'y a pas de place dans la direction que vous avez choisie.");
+				Console.WriteLine("Veuillez choisir une autre case svp. \n");
+			}
+			catch (DejaOccupe e)
+			{
+				Console.WriteLine(e.Message);
+			}
 		}
 	}
 	// Affichage du score des deux joueurs
@@ -176,11 +258,12 @@ public class Program
 			}
 		}
 	}
-	public static void ShootShips(char[,] board, char[] letters, string[] firstName, string[] playerNow, char[] playerShipIcon, int[] score, int[] nbShips)
+	public static void ShootShips(char[,] board, char[] letters, string[] firstName, string[] playerNow, char[] playerShipIcon, int[] score, int[] nbShips, NetworkStream stream, StreamReader sr)
     {
 		string shoot;
 		bool continueBattle = true;
 		int playerNowId = 2;
+		string serverPlayerShot;
 		while (continueBattle)
         {
 			// Le programme cherche le prénom de la personne qui joue et prend son indice dans le tableau firstName[]
@@ -203,10 +286,20 @@ public class Program
 
 			} else
             {
-				// Au tour du joueur enregistré dans le tableau playerNow de jouer
-				Console.WriteLine("\n" + playerNow[0] + ", à vous le tour de jouer !");
-				Console.WriteLine("Entrez la case où vous souhaitez tirer (comme 'B2' par exemple) : ");
-				shoot = Console.ReadLine();
+				if(playerNow[0] == firstName[1])
+                {
+					serverPlayerShot = sr.ReadLine();
+					Console.WriteLine(serverPlayerShot);
+					shoot = serverPlayerShot;
+
+				} else
+                {
+					// Au tour du joueur enregistré dans le tableau playerNow de jouer
+					Console.WriteLine("\n" + playerNow[0] + ", à vous le tour de jouer !");
+					Console.WriteLine("Entrez la case où vous souhaitez tirer (comme 'B2' par exemple) : ");
+					shoot = Console.ReadLine();
+				}
+				
 				// Prendre le deuxième caractère de la chaine de caractères, le chiffre à gauche du damier
 				int secondCharShoot = shoot[1] - '0';
 				for (int column = 0; column < 10; column++)
@@ -214,10 +307,13 @@ public class Program
 					// si la lettre en haut du damier == le premier caractère de shoot
 					if (letters[column] == shoot[0])
 					{
-						// Si la case séléctionnée correspond à mon propre navire, je perds un point car je me tire dessus
 						if (board[secondCharShoot - 1, column] == 'x' && playerShipIcon[playerNowId] == 'x')
 						{
 							Console.Write("Vous avez visé votre propre navire, ca ne marche pas. Raté !");
+							int byteCount = Encoding.UTF8.GetByteCount(serverPlayerShot + 1);
+							byte[] sendData = Encoding.UTF8.GetBytes(serverPlayerShot);
+							stream.Write(sendData, 0, sendData.Length);
+							Console.WriteLine("sending data to server...");
 						}
 						// Si la case séléctionnée correspond au navire de mon adversaire, je le tire dessus et je gagne un point
 						else if (board[secondCharShoot - 1, column] == 'o' && playerShipIcon[playerNowId] == 'x')
@@ -227,16 +323,24 @@ public class Program
 							score[playerNowId]++;
 							SinkEnemyShip(firstName, playerNow, nbShips);
 							Console.WriteLine("Vous avez tiré sur un navire ennemi, bravo !");
+							int byteCount = Encoding.UTF8.GetByteCount(serverPlayerShot + 1);
+							byte[] sendData = Encoding.UTF8.GetBytes(serverPlayerShot);
+							stream.Write(sendData, 0, sendData.Length);
+							Console.WriteLine("sending data to server...");
 						}
 						// Si la case séléctionnée ne correspond à aucune navire, je ne gagne ou perds aucun point car j'ai raté
 						else if (board[secondCharShoot - 1, column] == '\0' && playerShipIcon[playerNowId] == 'x')
 						{
 							Console.WriteLine("Vous avez tiré dans le vide, raté !");
+							int byteCount = Encoding.UTF8.GetByteCount(serverPlayerShot + 1);
+							byte[] sendData = Encoding.UTF8.GetBytes(serverPlayerShot);
+							stream.Write(sendData, 0, sendData.Length);
+							Console.WriteLine("sending data to server...");
 						}
 						// Si la case séléctionnée correspond à mon propre navire, je perds un point car je me tire dessus
 						if (board[secondCharShoot - 1, column] == 'o' && playerShipIcon[playerNowId] == 'o')
 						{
-							Console.Write("Vous avez visé votre propre navire, ca ne marche pas. Raté !");
+							Console.Write("Le Server joueur a tiré sur lui-même, ca ne marche pas. Raté !");
 						}
 						// Si la case séléctionnée correspond au navire de mon adversaire, je le tire dessus et je gagne un point
 						else if (board[secondCharShoot - 1, column] == 'x' && playerShipIcon[playerNowId] == 'o')
@@ -245,12 +349,12 @@ public class Program
 							// Je gagne un point
 							score[playerNowId]++;
 							SinkEnemyShip(firstName, playerNow, nbShips);
-							Console.WriteLine("Vous avez tiré sur un navire ennemi, bravo !");
+							Console.WriteLine("Le Server joueur vous tiré dessus !");
 						}
 						// Si la case séléctionnée ne correspond à aucune navire, je ne gagne ou perds aucun point car j'ai raté
 						else if (board[secondCharShoot - 1, column] == '\0' && playerShipIcon[playerNowId] == 'o')
 						{
-							Console.WriteLine("Vous avez tiré dans le vide, raté !");
+							Console.WriteLine("Le Server joueur a raté !");
 						}
 
 					}
@@ -327,22 +431,26 @@ public class Program
 
 				// Lecture de messages
 				StreamReader sr = new StreamReader(stream);
-				string response = sr.ReadLine();
-				Console.WriteLine(response);
 
-				
+				// Récupérer le prénom du deuxième joueur
+				firstName[1] = sr.ReadLine();
+				Console.WriteLine(firstName[1]);
+
+				// Récupérer les coordonnées du deuxième joueur
+				string shipCoordinatesServer = sr.ReadLine();
+				Console.WriteLine(shipCoordinatesServer);
+
 				// Placer les navires du premier joueur
-				PlaceShips(board, letters, firstName, playerNow, stream);
+				PlaceShipsServer(board, letters, firstName, playerNow, shipCoordinatesServer);
 				// Afficher le damier
 				ShowBoard(board, letters);
-				// Autour du deuxième joueur de jouer
-				//string secondPlayer = Server();
-				//Console.WriteLine("Le deuxième joueur est :" + secondPlayer);
 				// Placer les navires du deuxième joueur
 				PlaceShips(board, letters, firstName, playerNow, stream);
 				// Afficher le damier
 				ShowBoard(board, letters);
-				ShootShips(board, letters, firstName, playerNow, playerShipIcon, score, nbShips);
+				// Maintenant il faut que les deux joueurs se tirent dessus, attendre qu'il m'envoie sur quelle case il a tiré
+				playerNow[0] = firstName[1];
+				ShootShips(board, letters, firstName, playerNow, playerShipIcon, score, nbShips, stream, sr);
 				ShowScore(firstName, nbShips, score);
 
 				stream.Close();

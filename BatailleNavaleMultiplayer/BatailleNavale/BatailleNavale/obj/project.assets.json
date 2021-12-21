@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\utilisateur\\source\\repos\\BatailleNavale\\BatailleNavale\\BatailleNavale.csproj",
+      "projectUniqueName": "C:\\Users\\utilisateur\\github\\BatailleNavale\\BatailleNavaleMultiplayer\\BatailleNavale\\BatailleNavale\\BatailleNavale.csproj",
       "projectName": "BatailleNavale",
-      "projectPath": "C:\\Users\\utilisateur\\source\\repos\\BatailleNavale\\BatailleNavale\\BatailleNavale.csproj",
+      "projectPath": "C:\\Users\\utilisateur\\github\\BatailleNavale\\BatailleNavaleMultiplayer\\BatailleNavale\\BatailleNavale\\BatailleNavale.csproj",
       "packagesPath": "C:\\Users\\utilisateur\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\utilisateur\\source\\repos\\BatailleNavale\\BatailleNavale\\obj\\",
+      "outputPath": "C:\\Users\\utilisateur\\github\\BatailleNavale\\BatailleNavaleMultiplayer\\BatailleNavale\\BatailleNavale\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\utilisateur\\AppData\\Roaming\\NuGet\\NuGet.Config",

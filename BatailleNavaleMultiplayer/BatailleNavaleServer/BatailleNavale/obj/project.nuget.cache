@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zRm0gjz0DopQZpiTswgIN1wCAKnLVzi+WuKoI09brcEKkJR0Vr9k7jker9+96eMoPQUQfXA4Ui+LJ71Cle3twg==",
+  "dgSpecHash": "uz2BBB66+KoCukcvBh/RM6YOnoorIOZdYDcv8MsGEH72iu+V2EXRoGWieXNFDDqEuzXVHzK03bCYey3BPu0LUA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\utilisateur\\source\\repos\\BatailleNavaleServer\\BatailleNavale\\BatailleNavaleServer.csproj",
+  "projectFilePath": "C:\\Users\\utilisateur\\github\\BatailleNavale\\BatailleNavaleMultiplayer\\BatailleNavaleServer\\BatailleNavale\\BatailleNavaleServer.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
