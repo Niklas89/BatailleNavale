@@ -28,7 +28,7 @@ public class Program
 
 	}
 	// Placer les navires sur le navire
-	public static void PlaceShips(char[,] board, char[] letters, string[] firstName, string[] playerNow)
+	public static void PlaceShips(char[,] board, char[] letters, string[] firstName, string[] playerNow, NetworkStream stream)
 	{
 		string ship;
 		string chooseDirectionString;
@@ -81,6 +81,11 @@ public class Program
 					board[secondCharShip - 1, firstCharShip + 1] = shipIcon;
 					board[secondCharShip - 1, firstCharShip + 2] = shipIcon;
 					board[secondCharShip - 1, firstCharShip + 3] = shipIcon;
+					string messageToSend = "LE CLIENT A REPONDU";
+					int byteCount = Encoding.ASCII.GetByteCount(messageToSend + 1);
+					byte[] sendData = Encoding.ASCII.GetBytes(messageToSend);
+					stream.Write(sendData, 0, sendData.Length);
+					Console.WriteLine("sending data to server...");
 					keepAsking = false;
 
 				}
@@ -91,6 +96,11 @@ public class Program
 					board[secondCharShip - 1, firstCharShip - 1] = shipIcon;
 					board[secondCharShip - 1, firstCharShip - 2] = shipIcon;
 					board[secondCharShip - 1, firstCharShip - 3] = shipIcon;
+					string messageToSend = "LE CLIENT A REPONDU";
+					int byteCount = Encoding.ASCII.GetByteCount(messageToSend + 1);
+					byte[] sendData = Encoding.ASCII.GetBytes(messageToSend);
+					stream.Write(sendData, 0, sendData.Length);
+					Console.WriteLine("sending data to server...");
 					keepAsking = false;
 				}
 				// Si la direction = 3 et la position donné par l'utilisateur - 3 (à la verticale vers le haut) est disponible :
@@ -100,6 +110,11 @@ public class Program
 					board[secondCharShip - 2, firstCharShip] = shipIcon;
 					board[secondCharShip - 3, firstCharShip] = shipIcon;
 					board[secondCharShip - 4, firstCharShip] = shipIcon;
+					string messageToSend = "LE CLIENT A REPONDU";
+					int byteCount = Encoding.ASCII.GetByteCount(messageToSend + 1);
+					byte[] sendData = Encoding.ASCII.GetBytes(messageToSend);
+					stream.Write(sendData, 0, sendData.Length);
+					Console.WriteLine("sending data to server...");
 					keepAsking = false;
 				}
 				// Si la direction = 4 et la position donné par l'utilisateur + 3 (à la verticale vers le bas) est disponible :
@@ -109,6 +124,11 @@ public class Program
 					board[secondCharShip, firstCharShip] = shipIcon;
 					board[secondCharShip + 1, firstCharShip] = shipIcon;
 					board[secondCharShip + 2, firstCharShip] = shipIcon;
+					string messageToSend = "LE CLIENT A REPONDU";
+					int byteCount = Encoding.ASCII.GetByteCount(messageToSend + 1);
+					byte[] sendData = Encoding.ASCII.GetBytes(messageToSend);
+					stream.Write(sendData, 0, sendData.Length);
+					Console.WriteLine("sending data to server...");
 					keepAsking = false;
 				} else
                 {
@@ -312,14 +332,14 @@ public class Program
 
 				
 				// Placer les navires du premier joueur
-				PlaceShips(board, letters, firstName, playerNow);
+				PlaceShips(board, letters, firstName, playerNow, stream);
 				// Afficher le damier
 				ShowBoard(board, letters);
 				// Autour du deuxième joueur de jouer
 				//string secondPlayer = Server();
 				//Console.WriteLine("Le deuxième joueur est :" + secondPlayer);
 				// Placer les navires du deuxième joueur
-				PlaceShips(board, letters, firstName, playerNow);
+				PlaceShips(board, letters, firstName, playerNow, stream);
 				// Afficher le damier
 				ShowBoard(board, letters);
 				ShootShips(board, letters, firstName, playerNow, playerShipIcon, score, nbShips);
