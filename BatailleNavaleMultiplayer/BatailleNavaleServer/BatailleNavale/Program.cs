@@ -22,12 +22,14 @@ public class Program
 			Console.Write(line + 1 + "  | ");
 			for (int column = 0; column < 10; column++)
 			{
-				// s'il y a des bateaux du Client dans une case on ne l'affiche pas, sinon on affiche le contenu de la case
+				// s'il y a un navire du Client dans une case on ne l'affiche pas
 				if(board[line, column] == 'x')
                 {
 					Console.Write("  | ");
-				} else
-                {
+				}
+				// sinon on affiche le contenu de la case
+				else
+				{
 					Console.Write(board[line, column] + "  | ");
 				}
 				
@@ -37,7 +39,7 @@ public class Program
 		}
 
 	}
-	// Placer les navires sur le navire
+	// Placer les navires sur le damier
 	public static void PlaceShips(char[,] board, char[] letters, string[] firstName, string[] playerNow, StreamWriter? sw, StreamReader? sr)
 	{
 		string ship;
@@ -45,15 +47,19 @@ public class Program
 		int chooseDirection = 0;
 		char shipIcon = '\0';
 		bool keepAsking = true;
-		if(playerNow[0] == firstName[0])
+		// vérifier si le joueur actuel est égal au premier prénom du tableau
+		if (playerNow[0] == firstName[0])
         {
 			shipIcon = 'x';
-        } else if(playerNow[0] == firstName[1])
+        }
+		// vérifier si le joueur actuel est égal au deuxième prénom du tableau
+		else if (playerNow[0] == firstName[1])
         {
 			shipIcon = 'o';
         }
 		while (keepAsking)
 		{
+			// le joueur place ses navires
 			Console.WriteLine("Bonjour " + playerNow[0] + " !");
 			Console.WriteLine("Vous avez 4 cases pour placer vos navires.");
 			Console.WriteLine("Entrez la case où vous souhaitez placer votre premier navire (comme 'B2' par exemple) :");
@@ -65,9 +71,9 @@ public class Program
 			// Le programme cherche la case qui correspond dans le tableau
 			for (int column = 0; column < 10; column++)
 			{
+				// comparer le premier caractère de la chaîne aux lettres en haut du damier pour trouver la colonne correspondante
 				if (letters[column] == ship[0])
 				{
-					//board[secondCharShip - 1, column] = ship[1];
 					firstCharShip = column;
 				}
 			}
@@ -91,6 +97,7 @@ public class Program
 					board[secondCharShip - 1, firstCharShip + 1] = shipIcon;
 					board[secondCharShip - 1, firstCharShip + 2] = shipIcon;
 					board[secondCharShip - 1, firstCharShip + 3] = shipIcon;
+					// envoyer les coordonnées à l'appli Client (exemple: B21, B2 (case) + 1 (direction))
 					sw.WriteLine(ship + chooseDirectionString);
 					sw.Flush();
 					keepAsking = false;
@@ -103,6 +110,7 @@ public class Program
 					board[secondCharShip - 1, firstCharShip - 1] = shipIcon;
 					board[secondCharShip - 1, firstCharShip - 2] = shipIcon;
 					board[secondCharShip - 1, firstCharShip - 3] = shipIcon;
+					// envoyer les coordonnées à l'appli Client (exemple: B21, B2 (case) + 1 (direction))
 					sw.WriteLine(ship + chooseDirectionString);
 					sw.Flush();
 					keepAsking = false;
@@ -114,6 +122,7 @@ public class Program
 					board[secondCharShip - 2, firstCharShip] = shipIcon;
 					board[secondCharShip - 3, firstCharShip] = shipIcon;
 					board[secondCharShip - 4, firstCharShip] = shipIcon;
+					// envoyer les coordonnées à l'appli Client (exemple: B21, B2 (case) + 1 (direction))
 					sw.WriteLine(ship + chooseDirectionString);
 					sw.Flush();
 					keepAsking = false;
@@ -125,6 +134,7 @@ public class Program
 					board[secondCharShip, firstCharShip] = shipIcon;
 					board[secondCharShip + 1, firstCharShip] = shipIcon;
 					board[secondCharShip + 2, firstCharShip] = shipIcon;
+					// envoyer les coordonnées à l'appli Client (exemple: B21, B2 (case) + 1 (direction))
 					sw.WriteLine(ship + chooseDirectionString);
 					sw.Flush();
 					keepAsking = false;
@@ -144,12 +154,9 @@ public class Program
             }
 		}
 	}
-	// Placer les navires sur le navire
+	// Placer les navires du premier joueur, l'appli Client, sur le damier
 	public static void PlaceShipsClient(char[,] board, char[] letters, string[] firstName, string[] playerNow, string shipCoordinatesClient)
 	{
-		string ship;
-		string chooseDirectionString;
-		int chooseDirection = 0;
 		char shipIcon = 'x';
 		bool keepAsking = true;
 		while (keepAsking)
@@ -165,12 +172,12 @@ public class Program
 			{
 				if (letters[column] == shipCoordinatesClient[0])
 				{
-					//board[secondCharShip - 1, column] = ship[1];
 					firstCharShip = column;
 				}
 			}
 			try
 			{
+				// si la case est déjà occupée on aura le message d'erreur
 				if (board[secondCharShip - 1, firstCharShip] == 'x')
 				{
 					throw new DejaOccupe();
@@ -237,6 +244,7 @@ public class Program
 			Console.WriteLine(firstName[firstNameIndex] + " - SCORE : " + score[firstNameIndex] + "/4 - NOMBRE DE NAVIRES RESTANTS : " + nbShips[firstNameIndex]);
 		}
 	}
+	// Exploser et couler les navires ennemies, ceux de l'appli Client
 	public static void SinkEnemyShip(string[] firstName, string[] playerNow, int[] nbShips)
     {
 		foreach (string player in firstName)
@@ -259,12 +267,14 @@ public class Program
 			}
 		}
 	}
+	// Tirer sur les navires
 	public static void ShootShips(char[,] board, char[] letters, string[] firstName, string[] playerNow, char[] playerShipIcon, int[] score, int[] nbShips, StreamWriter? sw, StreamReader? sr, byte[] buffer, NetworkStream stream)
 	{
 		string shoot;
 		bool continueBattle = true;
 		int playerNowId = 2;
 		string clientPlayerShot = "";
+		// Tant que le combat continue... on continue
 		while (continueBattle)
         {
 			// Le programme cherche le prénom de la personne qui joue et prend son indice dans le tableau firstName[]
@@ -283,6 +293,7 @@ public class Program
 			{
 				Console.WriteLine(playerNow[0] + ", vous avez perdu !");
 				Console.WriteLine("Votre score est : " + score[playerNowId]);
+				// On arrete le combat
 				continueBattle = false;
 
 			} else
@@ -388,12 +399,6 @@ public class Program
             }
 		}
 	}
-	public static int RandomTenNumber()
-    {
-		Random randomNumber = new Random();
-		int returnRandomNumber = randomNumber.Next(1, 11);
-		return returnRandomNumber;
-	}
 	public static void Main()
 	{
 		// Le score de firstName[] à l'indice 1 est lié au score[] à l'indice 1
@@ -418,8 +423,11 @@ public class Program
 		listener.Start();
 		while (true)
 		{
+			// Attendre le début de la connection avec le client. 
+			// L'appli Serveur doit démarrer en premier, puis lancer l'appli Client quand le message ci-dessous est affiché
 			Console.WriteLine("Waiting for a connection.");
 			TcpClient client = listener.AcceptTcpClient();
+			// La connection a bien été faite
 			Console.WriteLine("Client accepted.");
 			NetworkStream stream = client.GetStream();
 			StreamReader sr = new StreamReader(client.GetStream());
@@ -436,30 +444,18 @@ public class Program
 						recv++;
 					}
 				}
+				// Demander le prénom du premier joueur et l'enregistrer dans request
 				string request = Encoding.UTF8.GetString(buffer, 0, recv);
-				int countLetter = 0;
-				foreach (char letter in request)
-				{
-					countLetter++;
-				}
-				if (countLetter == 1)
-				{
-					int option = Int32.Parse(request);
-				}
-				else if (countLetter == 2)
-				{
-					string position = request;
-				}
-				else if (countLetter > 2)
-				{
-					// Demander le prénom du premier joueur
-					firstName[0] = request;
-					Console.WriteLine("request received " + firstName[0]);
-				}
+				// enregistrer le prénom du premier joueur dans la première case du tableau firstName[]
+				firstName[0] = request;
+				Console.WriteLine("request received " + firstName[0]);
 				Console.WriteLine("Le premier joueur est : " + firstName[0]);
+				// demander au joueur de l'appli Serveur, le deuxième joueur, de rentrer son prénom
 				Console.WriteLine("Deuxième joueur, quel est votre prénom ?");
 				firstName[1] = Console.ReadLine();
+				// enregistrer le deuxième joueur, celui de l'appli Serveur, comme joueur actuel
 				playerNow[0] = firstName[1];
+				// Envoyer le prénom du deuxème joueur, appli Serveur, à l'appli Client
 				sw.WriteLine(playerNow[0]);
 				sw.Flush();
 				// Placer les navires du premier joueur, Client
@@ -467,7 +463,7 @@ public class Program
 				// Afficher le damier
 				ShowBoard(board, letters);
 
-				// Récupérer les coordonnées du premier joueur
+				// Récupérer les coordonnées du premier joueur, l'appli Client
 				buffer = new byte[1024];
 				stream.Read(buffer, 0, buffer.Length);
 				recv = 0;
@@ -479,19 +475,16 @@ public class Program
 					}
 				}
 				string shipCoordinatesClient = Encoding.UTF8.GetString(buffer, 0, recv);
-				// Demander le prénom du premier joueur
-				//playerNow[0] = request;
-				Console.WriteLine("Coordonnées de joueur Client " + shipCoordinatesClient);
+				// Le joueur actuel devient le deuxième joueur, celui de l'appli Serveur
 				playerNow[0] = firstName[1];
-					// Placer les navires du deuxième joueur
+				// Placer les navires du joueur de l'appli Client
 				PlaceShipsClient(board, letters, firstName, playerNow, shipCoordinatesClient);
 				// Afficher le damier
 				ShowBoard(board, letters);
-				// Maintenant il faut que les deux joueurs se tirent dessus, c'est au tour du server de jouer
+				// Méthode pour tirer sur les navires, les deux joueurs vont s'échanger les données ici
 				ShootShips(board, letters, firstName, playerNow, playerShipIcon, score, nbShips, sw, sr, buffer, stream);
+				// Montrer le score des deux joueurs
 				ShowScore(firstName, nbShips, score);
-				
-
 			}
 			catch (Exception e)
 			{
@@ -501,9 +494,9 @@ public class Program
 		}
 	}
 }
+// Affichage de message d'erreur si la case est déjà occupée
 public class DejaOccupe : Exception
 {
-	//Overriding the Message property
 	public override string Message
 	{
 		get
