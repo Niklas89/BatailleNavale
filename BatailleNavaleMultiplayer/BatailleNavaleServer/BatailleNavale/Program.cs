@@ -256,6 +256,7 @@ public class Program
 		string shoot;
 		bool continueBattle = true;
 		int playerNowId = 2;
+		string clientPlayerShot = "";
 		while (continueBattle)
         {
 			// Le programme cherche le prénom de la personne qui joue et prend son indice dans le tableau firstName[]
@@ -291,8 +292,11 @@ public class Program
 							recv++;
 						}
 					}
-					string clientPlayerShot = Encoding.UTF8.GetString(buffer, 0, recv);
+					clientPlayerShot = Encoding.UTF8.GetString(buffer, 0, recv);
 					shoot = clientPlayerShot;
+					Console.WriteLine("SHOOT: "+shoot);
+					Console.WriteLine("RECV: "+recv);
+					Console.WriteLine("JOUEUR CLIENT: "+playerNow[0]);
 				} else
                 {
 					// Au tour du joueur enregistré dans le tableau playerNow de jouer
@@ -307,7 +311,6 @@ public class Program
 					// si la lettre en haut du damier == le premier caractère de shoot
 					if (letters[column] == shoot[0])
 					{
-						// Si la case séléctionnée correspond à mon propre navire, je perds un point car je me tire dessus
 						if (board[secondCharShoot - 1, column] == 'x' && playerShipIcon[playerNowId] == 'x')
 						{
 							Console.Write("Le Client a tiré sur son propre navire, ca ne marche pas. Raté !");
@@ -326,7 +329,7 @@ public class Program
 						// Si la case séléctionnée ne correspond à aucune navire, je ne gagne ou perds aucun point car j'ai raté
 						else if (board[secondCharShoot - 1, column] == '\0' && playerShipIcon[playerNowId] == 'x')
 						{
-							Console.WriteLine("Le client a tiré dans le vide, raté !");
+							Console.WriteLine("Le client a tiré dans le vide, raté ! VOIR CASE TABLEAU " + secondCharShoot+ column);
 							// recevoir les coordonnées du client
 						}
 						// Si la case séléctionnée correspond à mon propre navire, je perds un point car je me tire dessus

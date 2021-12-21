@@ -310,8 +310,8 @@ public class Program
 						if (board[secondCharShoot - 1, column] == 'x' && playerShipIcon[playerNowId] == 'x')
 						{
 							Console.Write("Vous avez visé votre propre navire, ca ne marche pas. Raté !");
-							int byteCount = Encoding.UTF8.GetByteCount(serverPlayerShot + 1);
-							byte[] sendData = Encoding.UTF8.GetBytes(serverPlayerShot);
+							int byteCount = Encoding.UTF8.GetByteCount(shoot + 1);
+							byte[] sendData = Encoding.UTF8.GetBytes(shoot);
 							stream.Write(sendData, 0, sendData.Length);
 							Console.WriteLine("sending data to server...");
 						}
@@ -323,8 +323,8 @@ public class Program
 							score[playerNowId]++;
 							SinkEnemyShip(firstName, playerNow, nbShips);
 							Console.WriteLine("Vous avez tiré sur un navire ennemi, bravo !");
-							int byteCount = Encoding.UTF8.GetByteCount(serverPlayerShot + 1);
-							byte[] sendData = Encoding.UTF8.GetBytes(serverPlayerShot);
+							int byteCount = Encoding.UTF8.GetByteCount(shoot + 1);
+							byte[] sendData = Encoding.UTF8.GetBytes(shoot);
 							stream.Write(sendData, 0, sendData.Length);
 							Console.WriteLine("sending data to server...");
 						}
@@ -332,8 +332,8 @@ public class Program
 						else if (board[secondCharShoot - 1, column] == '\0' && playerShipIcon[playerNowId] == 'x')
 						{
 							Console.WriteLine("Vous avez tiré dans le vide, raté !");
-							int byteCount = Encoding.UTF8.GetByteCount(serverPlayerShot + 1);
-							byte[] sendData = Encoding.UTF8.GetBytes(serverPlayerShot);
+							int byteCount = Encoding.UTF8.GetByteCount(shoot + 1);
+							byte[] sendData = Encoding.UTF8.GetBytes(shoot);
 							stream.Write(sendData, 0, sendData.Length);
 							Console.WriteLine("sending data to server...");
 						}
