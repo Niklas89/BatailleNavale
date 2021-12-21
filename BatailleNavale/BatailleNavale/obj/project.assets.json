@@ -8,27 +8,26 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\magas\\.nuget\\packages\\": {}
+    "C:\\Users\\utilisateur\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\magas\\bataille\\BatailleNavale\\BatailleNavale\\BatailleNavale\\BatailleNavale.csproj",
+      "projectUniqueName": "C:\\Users\\utilisateur\\github\\BatailleNavale\\BatailleNavale\\BatailleNavale\\BatailleNavale.csproj",
       "projectName": "BatailleNavale",
-      "projectPath": "C:\\Users\\magas\\bataille\\BatailleNavale\\BatailleNavale\\BatailleNavale\\BatailleNavale.csproj",
-      "packagesPath": "C:\\Users\\magas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\magas\\bataille\\BatailleNavale\\BatailleNavale\\BatailleNavale\\obj\\",
+      "projectPath": "C:\\Users\\utilisateur\\github\\BatailleNavale\\BatailleNavale\\BatailleNavale\\BatailleNavale.csproj",
+      "packagesPath": "C:\\Users\\utilisateur\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\utilisateur\\github\\BatailleNavale\\BatailleNavale\\BatailleNavale\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\magas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\utilisateur\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {}
       },
       "frameworks": {
         "net6.0": {
@@ -55,7 +54,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }
