@@ -30,7 +30,7 @@ public class Program
 
 	}
 	// Placer les navires sur le navire
-	public static void PlaceShips(char[,] board, char[] letters, string[] firstName, string[] playerNow, StreamWriter? sw)
+	public static void PlaceShips(char[,] board, char[] letters, string[] firstName, string[] playerNow, StreamWriter? sw, StreamReader? sr)
 	{
 		string ship;
 		string chooseDirectionString;
@@ -342,11 +342,44 @@ public class Program
 				playerNow[0] = firstName[1];
 				//Client(firstName[0]);
 				// Placer les navires du premier joueur
-				PlaceShips(board, letters, firstName, playerNow, sw);
+				PlaceShips(board, letters, firstName, playerNow, sw, sr);
 				// Afficher le damier
 				ShowBoard(board, letters);
-				// Placer les navires du deuxième joueur
-				PlaceShips(board, letters, firstName, playerNow);
+
+				
+					buffer = new byte[1024];
+					stream.Read(buffer, 0, buffer.Length);
+					recv = 0;
+					foreach (byte b in buffer)
+					{
+						if (b != 0)
+						{
+							recv++;
+						}
+					}
+					request = Encoding.UTF8.GetString(buffer, 0, recv);
+					countLetter = 0;
+					foreach (char letter in request)
+					{
+						countLetter++;
+					}
+					if (countLetter == 1)
+					{
+						int option = Int32.Parse(request);
+					}
+					else if (countLetter == 2)
+					{
+						string position = request;
+					}
+					else if (countLetter > 2)
+					{
+						// Demander le prénom du premier joueur
+						//playerNow[0] = request;
+						Console.WriteLine("request received " + request);
+					}
+
+					// Placer les navires du deuxième joueur
+					PlaceShips(board, letters, firstName, playerNow, sw, sr);
 				// Afficher le damier
 				ShowBoard(board, letters);
 				ShootShips(board, letters, firstName, playerNow, playerShipIcon, score, nbShips);
