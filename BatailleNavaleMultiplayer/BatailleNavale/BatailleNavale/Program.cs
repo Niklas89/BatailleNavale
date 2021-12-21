@@ -317,8 +317,8 @@ public class Program
 				firstName[0] = Console.ReadLine();
 				playerNow[0] = firstName[0];
 				string messageToSend = playerNow[0]; // Message à envoyer
-				int byteCount = Encoding.ASCII.GetByteCount(messageToSend + 1);
-				byte[] sendData = Encoding.ASCII.GetBytes(messageToSend);
+				int byteCount = Encoding.UTF8.GetByteCount(messageToSend + 1);
+				byte[] sendData = Encoding.UTF8.GetBytes(messageToSend);
 
 				//Envoi de message
 				NetworkStream stream = client.GetStream();
