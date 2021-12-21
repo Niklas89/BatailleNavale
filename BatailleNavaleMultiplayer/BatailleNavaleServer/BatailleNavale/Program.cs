@@ -22,7 +22,15 @@ public class Program
 			Console.Write(line + 1 + "  | ");
 			for (int column = 0; column < 10; column++)
 			{
-				Console.Write(board[line, column] + "  | ");
+				// s'il y a des bateaux du Client dans une case on ne l'affiche pas, sinon on affiche le contenu de la case
+				if(board[line, column] == 'x')
+                {
+					Console.Write("  | ");
+				} else
+                {
+					Console.Write(board[line, column] + "  | ");
+				}
+				
 			}
 			Console.WriteLine();
 			Console.WriteLine("-------------------------------------------");
@@ -294,9 +302,6 @@ public class Program
 					}
 					clientPlayerShot = Encoding.UTF8.GetString(buffer, 0, recv);
 					shoot = clientPlayerShot;
-					Console.WriteLine("SHOOT: "+shoot);
-					Console.WriteLine("RECV: "+recv);
-					Console.WriteLine("JOUEUR CLIENT: "+playerNow[0]);
 				} else
                 {
 					// Au tour du joueur enregistré dans le tableau playerNow de jouer
@@ -329,7 +334,7 @@ public class Program
 						// Si la case séléctionnée ne correspond à aucune navire, je ne gagne ou perds aucun point car j'ai raté
 						else if (board[secondCharShoot - 1, column] == '\0' && playerShipIcon[playerNowId] == 'x')
 						{
-							Console.WriteLine("Le client a tiré dans le vide, raté ! VOIR CASE TABLEAU " + secondCharShoot+ column);
+							Console.WriteLine("Le client a tiré dans le vide, raté !");
 							// recevoir les coordonnées du client
 						}
 						// Si la case séléctionnée correspond à mon propre navire, je perds un point car je me tire dessus

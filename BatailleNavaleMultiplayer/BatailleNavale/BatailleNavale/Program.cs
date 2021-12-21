@@ -20,7 +20,16 @@ public class Program
 			Console.Write(line + 1 + "  | ");
 			for (int column = 0; column < 10; column++)
 			{
-				Console.Write(board[line, column] + "  | ");
+
+				// s'il y a des bateaux du Server dans une case on ne l'affiche pas, sinon on affiche le contenu de la case
+				if (board[line, column] == 'o')
+				{
+					Console.Write("  | ");
+				}
+				else
+				{
+					Console.Write(board[line, column] + "  | ");
+				}
 			}
 			Console.WriteLine();
 			Console.WriteLine("-------------------------------------------");
